@@ -1,0 +1,10 @@
+.footer {
+  height: 60px;
+  background-color: green;
+  background-image: linear-gradient(to right, green 50%, purple);
+  display: flex;
+  text-align: center;
+}
+.power {
+  line-height: 60px;
+}
