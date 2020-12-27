@@ -1,10 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
+import Form from "../common/form";
 
-class Register extends Component {
+class Register extends Form {
   constructor(props) {
     super(props);
     this.state = {
-      user: {
+      data: {
         name: "",
         email: "",
         phone: "",
@@ -14,89 +15,49 @@ class Register extends Component {
       errors: {},
     };
   }
-
-  handleChange = (e) => {
-    const key = e.target.name;
-    const value = e.target.value;
-
-    const user = { ...this.state.user };
-    user[key] = value;
-
-    this.setState({ user });
-  };
-
   validateForm = () => {
-    const { user } = { ...this.state };
+    const { data } = { ...this.state };
     const errors = {};
-    if (user.name === "") errors.name = "Name Field is Required";
-    if (user.email === "") errors.email = "Email Field is Required";
-    if (user.phone === "") errors.phone = "phone Field is Required";
-
-    return Object.keys(errors).length === 0 ? null : errors;
+    const validateEmail = (email) => {
+      let re = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
+      return re.test(email);
+    };
+    const validatePassword = (password) => {
+      let reg = /^[a-zA-Z0-9]{8,12}$/;
+      return reg.test(password);
+    };
+    if (data.name === "") errors.name = "Name Field is Required";
+    if (data.email === "") errors.email = "Email Field is Required";
+    if (!validateEmail(data.email))
+      errors.email = "Please Enter Correct email id";
+    if (data.phone === "") errors.phone = "phone Field is Required";
+    if (data.password === "") errors.password = "Password Field is Required";
+    if (!validatePassword(data.password))
+      errors.password =
+        "Minimum eight characters, at least one letter and one number";
+    if (data.confirmPassword !== data.password)
+      errors.confirmPassword = "Password doesn't match";
+    return Object.keys(errors).length === 0 ? "" : errors;
   };
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-
-    const errors = this.validateForm();
-    this.setState({ errors });
-    console.log("errors", errors);
-    if (errors) return;
-    console.log("user object", this.state.user);
+  doSubmit = () => {
+    console.log("user object", this.state.data);
   };
   render() {
-    const { user } = this.state;
     return (
       <div>
         <div className="col-lg-4 register-card">
           <h3 className="heading">Register </h3>
           <form onSubmit={this.handleSubmit}>
-            <div className="form-group">
-              <label>Name</label>
-              <input
-                type="text"
-                name="name"
-                value={user.name}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label>Email id</label>
-              <input
-                type="text"
-                name="email"
-                value={user.email}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label>Phone #</label>
-              <input
-                type="text"
-                name="phone"
-                value={user.phone}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label>password</label>
-              <input
-                type="text"
-                name="password"
-                value={user.password}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label>Confirm password</label>
-              <input
-                type="text"
-                name="confirmPassword"
-                value={user.confirmPassword}
-                onChange={this.handleChange}
-              />
-            </div>
-            <button className="btn btn-primary btn-block">Register</button>
+            {this.renderInput("Name", "name")}
+            {this.renderInput("Email", "email", "email")}
+            {this.renderInput("Phone", "phone", "number")}
+            {this.renderInput("Password", "password", "password")}
+            {this.renderInput(
+              "Confirm Password",
+              "confirmPassword",
+              "password"
+            )}
+            {this.renderButton("Register")}
           </form>
         </div>
       </div>
