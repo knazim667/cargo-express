@@ -7,7 +7,7 @@ import { twitter } from "react-icons-kit/fa/twitter";
 import "./footer.css";
 const Footer = () => {
   return (
-    <footer className="footer mt-auto">
+    <footer className="footer mt-auto fixed-bottom">
       <div className="col-lg-4">
         <div className="power h-100 text-left">Powerdby Nazam UI & Markup</div>
       </div>

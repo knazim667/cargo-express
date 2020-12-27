@@ -4,6 +4,8 @@
   background-image: linear-gradient(to right, green 50%, purple);
   display: flex;
   text-align: center;
+  margin-top: auto !important;
+  bottom: 0%;
 }
 .power {
   line-height: 60px;

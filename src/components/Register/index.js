@@ -11,8 +11,39 @@ class Register extends Component {
         password: "",
         confirmPassword: "",
       },
+      errors: {},
     };
   }
+
+  handleChange = (e) => {
+    const key = e.target.name;
+    const value = e.target.value;
+
+    const user = { ...this.state.user };
+    user[key] = value;
+
+    this.setState({ user });
+  };
+
+  validateForm = () => {
+    const { user } = { ...this.state };
+    const errors = {};
+    if (user.name === "") errors.name = "Name Field is Required";
+    if (user.email === "") errors.email = "Email Field is Required";
+    if (user.phone === "") errors.phone = "phone Field is Required";
+
+    return Object.keys(errors).length === 0 ? null : errors;
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    const errors = this.validateForm();
+    this.setState({ errors });
+    console.log("errors", errors);
+    if (errors) return;
+    console.log("user object", this.state.user);
+  };
   render() {
     const { user } = this.state;
     return (
@@ -60,7 +91,7 @@ class Register extends Component {
               <label>Confirm password</label>
               <input
                 type="text"
-                name="confirmpassword"
+                name="confirmPassword"
                 value={user.confirmPassword}
                 onChange={this.handleChange}
               />
