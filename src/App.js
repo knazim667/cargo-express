@@ -1,18 +1,20 @@
 import React, { Component } from "react";
 import Navigation from "./components/Navigation";
-import Banner from "./components/Banner/index";
-import Process from "./components/process";
 import Footer from "./components/footer";
+import Layout from "./components/layout";
+import { Route, Switch } from "react-router-dom";
+import Register from "./components/Register";
 
 class App extends Component {
   render() {
     return (
       <div>
         <Navigation />
-        <main className="flex-shrink-0">
-          <Banner />
-          <Process />
-        </main>
+        <Switch>
+          <Route exact path="/" component={Layout} />
+          <Route exact path="/register" component={Register} />
+        </Switch>
+
         <Footer />
       </div>
     );

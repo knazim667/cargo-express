@@ -14,4 +14,9 @@ export const MENU_ITEMS = [
     path: "/login",
     offset: 0,
   },
+  {
+    label: "Register",
+    path: "/register",
+    offset: 0,
+  },
 ];
